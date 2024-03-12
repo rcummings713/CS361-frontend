@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {GridColDef} from "@mui/x-data-grid";
 import {Grid} from "@mui/material";
-import {useNavigate} from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import axios from "axios";
 import DataTile from "../components/DataTile";
@@ -19,7 +17,7 @@ function HomePage({currentUser}) {
         goalsmenu: "",
         TODmenu: ""
     })
-    
+
     const loadQuote = async () => {
         const response = await axios.get('/getQuote');
         setQuote(response.data[0].quote);
