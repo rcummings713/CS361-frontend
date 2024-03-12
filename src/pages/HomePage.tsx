@@ -46,17 +46,18 @@ function HomePage({currentUser}) {
 
         const response = await axios.get('https://3487-96-234-79-164.ngrok-free.app/request-profile', config);
 
-        const result = JSON.parse(response.data);
-        const profile = {
-            username: result['-username-'],
-            typemenu: result['-typemenu-'],
-            levelmenu: result['-levelmenu-'],
-            goalsmenu: result['-goalsmenu-'],
-            TODmenu: result['-TODmenu-']
+        if (response.status === 200 && response.data.length > 0) {
+            const result = JSON.parse(response.data);
+            const profile = {
+                username: result['-username-'],
+                typemenu: result['-typemenu-'],
+                levelmenu: result['-levelmenu-'],
+                goalsmenu: result['-goalsmenu-'],
+                TODmenu: result['-TODmenu-']
+            }
+            setuberFitProfile(profile);
+            console.log(uberFitProfile);
         }
-
-        setuberFitProfile(profile);
-        console.log(uberFitProfile);
     }
 
     useEffect(() => {
