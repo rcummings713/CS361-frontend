@@ -19,10 +19,7 @@ function HomePage({currentUser}) {
         goalsmenu: "",
         TODmenu: ""
     })
-    const columns: GridColDef[] = [
-        {field: 'countOfEntries', headerName: 'Number of Journal Entries', width: 150, flex: 1},
-    ]
-    const navigate = useNavigate();
+    
     const loadQuote = async () => {
         const response = await axios.get('/getQuote');
         setQuote(response.data[0].quote);
