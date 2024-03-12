@@ -14,11 +14,7 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
-import {Grid} from "@mui/material";
-import {Box} from "@mui/system";
 import SignUp from "./pages/SignUp";
-import {Login} from "@mui/icons-material";
 import SignIn from "./pages/SignIn";
 import Header from "./components/Header";
 

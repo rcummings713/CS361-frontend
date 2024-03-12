@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
-import {DataGrid, GridColDef} from "@mui/x-data-grid";
-import {Box, Button, Grid} from "@mui/material";
+import {GridColDef} from "@mui/x-data-grid";
+import {Grid} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import axios from "axios";
@@ -25,7 +25,6 @@ function HomePage({currentUser}) {
     const navigate = useNavigate();
     const loadQuote = async () => {
         const response = await axios.get('/getQuote');
-        const result = JSON.stringify(response.data);
         setQuote(response.data[0].quote);
         setAuthor(response.data[0].author);
     }
@@ -75,7 +74,6 @@ function HomePage({currentUser}) {
         }, []
     );
 
-    const test: string = 'check'
     return (
         <>
             <Grid container rowSpacing={5}>
