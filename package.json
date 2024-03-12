@@ -31,8 +31,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "prebuild": "export HOST=$HEROKU_APP_NAME.herokuapp.com"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
