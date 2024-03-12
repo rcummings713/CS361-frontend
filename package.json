@@ -2,11 +2,12 @@
   "name": "workout-app",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:4200",
+  "proxy": "https://fitjournal-api-ca964984ffd7.herokuapp.com/",
   "dependencies": {
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@fontsource/roboto": "^5.0.8",
+    "@mui/icons-material": "^5.15.12",
     "@mui/material": "^5.15.9",
     "@mui/x-data-grid": "^6.19.4",
     "@react-buddy/ide-toolbox": "^2.4.0",
@@ -23,6 +24,7 @@
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "latest",
     "typescript": "^4.9.5"
   },
   "scripts": {

@@ -17,33 +17,33 @@ import '@fontsource/roboto/700.css';
 import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
 import {Grid} from "@mui/material";
 import {Box} from "@mui/system";
+import SignUp from "./pages/SignUp";
+import {Login} from "@mui/icons-material";
+import SignIn from "./pages/SignIn";
+import Header from "./components/Header";
 
 function App() {
-    return (
-        <>
-            <BrowserRouter>
+    const [currentUser, setCurrentUser] = useState({
+        firstName: "",
+        lastName: "",
+        email: "",
+        userName: "",
+        password: ""
+    });
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
 
-                <header className={"App-header"}>
-                    <Grid container alignItems="center" justifyContent="center" columnSpacing={1}>
-                        <Grid item>
-                            <MonitorHeartIcon/>
-                        </Grid>
-                        <Grid item>
-                            <h1>
-                                Fit Journal
-                            </h1>
-                        </Grid>
-                    </Grid>
-                    <meta name="viewport" content="initial-scale=1, width=device-width"/>
-                </header>
-
+    function landing(currentUser, isLoggedIn) {
+        console.log(isLoggedIn)
+        if (isLoggedIn) {
+            console.log(currentUser)
+            return (<>
                 <main>
                     <section>
                         <Navigation></Navigation>
                     </section>
                     <section className={"App-content-area"}>
                         <Routes>
-                            <Route exact path="/" element={<HomePage/>}/>
+                            <Route exact path="/" element={<HomePage currentUser={currentUser}/>}/>
                             <Route exact path="/fitnessJournals" element={<FitnessJournals/>}/>
                             <Route exact path="/workoutTemplates" element={<WorkoutTemplates/>}/>
                             <Route exact path="/settings" element={<Settings/>}/>
@@ -53,7 +53,33 @@ function App() {
                         </Routes>
                     </section>
                 </main>
+            </>)
+        }
+        return (
+            <>
+                <main className={"d-flex justify-content-center"} style={{width: '100%'}}>
+                    <section style={{width: '100%'}}>
+                        <Routes>
+                            <Route exact path="/"
+                                   element={<SignIn
+                                       currentUser={currentUser}
+                                       setCurrentUser={setCurrentUser}
+                                       isLoggedIn={isLoggedIn}
+                                       setIsLoggedIn={setIsLoggedIn}
+                                   />}/>
+                            <Route exact path="/signUp" element={<SignUp/>}/>
+                        </Routes>
+                    </section>
+                </main>
+            </>
+        )
+    }
 
+    return (
+        <>
+            <BrowserRouter>
+                <Header></Header>
+                {landing(currentUser, isLoggedIn)}
             </BrowserRouter>
         </>
     );

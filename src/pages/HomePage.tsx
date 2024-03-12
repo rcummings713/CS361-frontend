@@ -5,11 +5,20 @@ import {useNavigate} from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import axios from "axios";
 import DataTile from "../components/DataTile";
+import DataTileProfile from "../components/DataTileProfile";
 
-function HomePage() {
+// @ts-ignore
+function HomePage({currentUser}) {
     const [quote, setQuote] = useState("");
     const [author, setAuthor] = useState("")
     const [journalCount, setJournalCount] = useState(0)
+    const [uberFitProfile, setuberFitProfile] = useState({
+        username: "",
+        typemenu: "",
+        levelmenu: "",
+        goalsmenu: "",
+        TODmenu: ""
+    })
     const columns: GridColDef[] = [
         {field: 'countOfEntries', headerName: 'Number of Journal Entries', width: 150, flex: 1},
     ]
@@ -28,6 +37,28 @@ function HomePage() {
         setJournalCount(journals.length);
     }
 
+    const loadUberFitProfile = async () => {
+        const config = {
+            headers: {
+                'ngrok-skip-browser-warning': '69420'
+            }
+        };
+
+        const response = await axios.get('https://3487-96-234-79-164.ngrok-free.app/request-profile', config);
+
+        const result = JSON.parse(response.data);
+        const profile = {
+            username: result['-username-'],
+            typemenu: result['-typemenu-'],
+            levelmenu: result['-levelmenu-'],
+            goalsmenu: result['-goalsmenu-'],
+            TODmenu: result['-TODmenu-']
+        }
+
+        setuberFitProfile(profile);
+        console.log(uberFitProfile);
+    }
+
     useEffect(() => {
             loadQuote();
         }, []
@@ -38,12 +69,17 @@ function HomePage() {
         }, []
     );
 
+    useEffect(() => {
+            loadUberFitProfile();
+        }, []
+    );
+
     const test: string = 'check'
     return (
         <>
             <Grid container rowSpacing={5}>
                 <Grid item xs={9}>
-                    <h2>Welcome</h2>
+                    <h2>Welcome {currentUser.firstName}</h2>
                 </Grid>
                 <Grid item xs={3}>
                     <h4>{new Date().toLocaleString()}</h4>
@@ -58,6 +94,12 @@ function HomePage() {
                 </Grid>
                 <Grid item xs={3}>
                     <DataTile count={journalCount}/>
+                </Grid>
+                <Grid item xs={1}>
+
+                </Grid>
+                <Grid item xs={12}>
+                    <DataTileProfile profile={uberFitProfile}/>
                 </Grid>
             </Grid>
         </>

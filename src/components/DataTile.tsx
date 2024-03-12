@@ -28,7 +28,7 @@ export default function DataTile({count}: { count: number }) {
                     boxShadow: 1,
                     borderRadius: 2,
                     p: 2,
-                    minWidth: 300,
+                    minWidth: 'auto',
                 }}
             >
                 <Box sx={{color: 'text.secondary'}}>Number of Journal Entries</Box>
