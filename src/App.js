@@ -5,7 +5,7 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import HomePage from "./pages/HomePage";
 import FitnessJournals from "./pages/FitnessJournals";
 import WorkoutTemplates from "./pages/WorkoutTemplates";
-import Settings from "./pages/Settings";
+import Profile from "./pages/Profile";
 import Info from "./pages/Info"
 import LogJournal from "./pages/LogJournal";
 import JournalExercises from "./pages/JournalExercises";
@@ -16,6 +16,8 @@ import '@fontsource/roboto/700.css';
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import Header from "./components/Header";
+import Templates from "./pages/Templates";
+import LogTemplate from "./pages/LogTemplate";
 
 function App() {
     const [currentUser, setCurrentUser] = useState({
@@ -38,10 +40,13 @@ function App() {
                     </section>
                     <section className={"App-content-area"}>
                         <Routes>
-                            <Route exact path="/" element={<HomePage currentUser={currentUser}/>}/>
+                            <Route exact path="/"
+                                   element={<HomePage currentUser={currentUser} setCurrentUser={setCurrentUser}/>}/>
                             <Route exact path="/fitnessJournals" element={<FitnessJournals/>}/>
                             <Route exact path="/workoutTemplates" element={<WorkoutTemplates/>}/>
-                            <Route exact path="/settings" element={<Settings/>}/>
+                            <Route exact path={"/viewTemplates"} element={<Templates/>}/>
+                            <Route exact path="/logTemplates" element={<LogTemplate/>}/>
+                            <Route exact path="/profile" element={<Profile currentUser={currentUser}/>}/>
                             <Route exact path="/info" element={<Info/>}/>
                             <Route exact path="/logJournal" element={<LogJournal/>}/>
                             <Route exact path="/viewJournalExercises" element={<JournalExercises/>}/>

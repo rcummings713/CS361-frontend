@@ -4,12 +4,14 @@ import Typography from "@mui/material/Typography";
 import axios from "axios";
 import DataTile from "../components/DataTile";
 import DataTileProfile from "../components/DataTileProfile";
+import {Tooltip} from "@mui/material";
 
 // @ts-ignore
 function HomePage({currentUser}) {
     const [quote, setQuote] = useState("");
     const [author, setAuthor] = useState("")
     const [journalCount, setJournalCount] = useState(0)
+    const [templateCount, setTemplateCount] = useState(0)
     const [uberFitProfile, setuberFitProfile] = useState({
         username: "",
         typemenu: "",
@@ -29,6 +31,13 @@ function HomePage({currentUser}) {
         const journals = await response.json()
         console.log('JOURNALS RETRIEVED', journals.length);
         setJournalCount(journals.length);
+    }
+
+    const loadTemplatesCount = async () => {
+        const response = await fetch('/getWorkoutTemplates');
+        const templates = await response.json()
+        console.log('TEMPLATES RETRIEVED', templates.length);
+        setTemplateCount(templates.length);
     }
 
     const loadUberFitProfile = async () => {
@@ -69,6 +78,11 @@ function HomePage({currentUser}) {
         }, []
     );
 
+    useEffect(() => {
+            loadTemplatesCount();
+        }, []
+    );
+
     return (
         <>
             <Grid container rowSpacing={5}>
@@ -87,10 +101,13 @@ function HomePage({currentUser}) {
                                 color={"text.secondary"}>-{author}</Typography>
                 </Grid>
                 <Grid item xs={3}>
-                    <DataTile count={journalCount}/>
+                    <DataTile count={journalCount} name={'Number of Journal Entries'}/>
                 </Grid>
-                <Grid item xs={1}>
+                <Grid item xs={2}>
 
+                </Grid>
+                <Grid item xs={3.5}>
+                    <DataTile count={templateCount} name={'Number of Workout Templates'}/>
                 </Grid>
                 <Grid item xs={12}>
                     <DataTileProfile profile={uberFitProfile}/>

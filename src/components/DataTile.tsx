@@ -19,7 +19,8 @@ const theme = createTheme({
     },
 });
 
-export default function DataTile({count}: { count: number }) {
+// @ts-ignore
+export default function DataTile({count, name}) {
     return (
         <ThemeProvider theme={theme}>
             <Box
@@ -31,7 +32,7 @@ export default function DataTile({count}: { count: number }) {
                     minWidth: 'auto',
                 }}
             >
-                <Box sx={{color: 'text.secondary'}}>Number of Journal Entries</Box>
+                <Box sx={{color: 'text.secondary'}}>{name}</Box>
                 <Box sx={{color: 'text.primary', fontSize: 34, fontWeight: 'medium'}}>
                     {count}
                 </Box>

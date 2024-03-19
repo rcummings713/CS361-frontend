@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 import {
     Button,
     Dialog,
@@ -14,13 +14,11 @@ import AddExerciseForm from "../components/AddExerciseForm";
 import {redirect, useNavigate} from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import {Box} from "@mui/system";
-import AddTemplateExercise from "../components/AddTemplateExercise";
 
-function LogJournal() {
+function LogTemplate() {
     // Use the Navigate for redirection
     const redirect = useNavigate();
     const [rows, setRows] = useState<Array<any>>([]);
-    const [workoutTemplates, setWorkoutTemplates] = useState<Array<any>>([])
 
     const columns: GridColDef[] = [
         {field: 'exercise', headerName: 'Exercise', width: 150, flex: 1},
@@ -65,13 +63,11 @@ function LogJournal() {
             rest: items.rest,
             load: items.load
         };
-        console.log(newRow);
         setRows([...rows, newRow]);
-        console.log(rows);
     }
 
     const [formData, setFormData] = useState({
-        journalName: '',
+        templateName: '',
     });
 
     const handleChange = (e: any) => {
@@ -81,8 +77,8 @@ function LogJournal() {
     const handleSubmit = (e: any) => {
         console.log(e)
         e.preventDefault();
-        let journalEntry: any = []
-        journalEntry.push(formData);
+        let template: any = []
+        template.push(formData);
         rows.forEach((item) => {
                 const row = {
                     exercise: item.exercise,
@@ -93,76 +89,47 @@ function LogJournal() {
                     load: item.load
                 }
                 console.log('row', row);
-                journalEntry = [...journalEntry, row];
+                template = [...template, row];
             }
         )
-        console.log('Journal entry', journalEntry);
+        console.log('Template entry', template);
         console.log('Form submitted:', formData);
-        logJournal(journalEntry)
+        logTemplate(template)
     };
 
-    const logJournal = async (journalEntry: any) => {
-        const response = await fetch('/createJournal', {
+    const logTemplate = async (template: any) => {
+        const response = await fetch('/createWorkoutTemplate', {
             method: 'post',
-            body: JSON.stringify(journalEntry),
+            body: JSON.stringify(template),
             headers: {
                 'Content-Type': 'application/json',
             },
         });
         if (response.status === 200) {
             // alert(`was added to the collection.`);
-            redirect("/fitnessJournals");
+            redirect("/workoutTemplates");
         } else {
             alert(`Error: ${response.status} issue with request made to server`);
-            redirect("/fitnessJournals");
+            redirect("/workoutTemplates");
         }
     };
-
-    const loadTemplates = async () => {
-        const response = await fetch('/getWorkoutTemplates');
-        const workoutTemplate = await response.json()
-        console.log('TEMPLATES RETRIEVED', workoutTemplate);
-
-        let newRows: any = []
-        workoutTemplate.forEach((template: any) => {
-            console.log(template);
-            let newRow = {
-                id: template._id,
-                templateName: template.templateName,
-                description: template.description,
-                dateCreated: template.dateCreated,
-                exercises: template.exercises
-            }
-            newRows.push(newRow);
-            console.log('newRow', newRow);
-            console.log(rows);
-        })
-        setWorkoutTemplates(newRows);
-    }
-
-    useEffect(() => {
-        loadTemplates();
-    }, [])
 
     return (
         <div>
             <form onSubmit={handleSubmit}>
                 <Grid container spacing={3}>
-                    <Grid item xs={6}>
+                    <Grid item xs={9}>
                         <TextField
                             id="outlined-basic"
                             variant="outlined"
-                            placeholder="Name of Entry"
-                            name="workoutName"
+                            placeholder="Template Name"
+                            name="templateName"
                             required
                             onChange={handleChange}
                         />
                     </Grid>
                     <Grid item xs={3}>
                         <AddExerciseForm addToGrid={addToGrid}/>
-                    </Grid>
-                    <Grid item xs={3}>
-                        <AddTemplateExercise addToGrid={addToGrid} workoutTemplates={workoutTemplates}/>
                     </Grid>
                     <Grid item xs={12}>
                         <DataGrid autoHeight={true}
@@ -183,8 +150,8 @@ function LogJournal() {
                             id="outlined-multiline-static"
                             multiline
                             rows={4}
-                            placeholder="Describe how your workout went!"
-                            name="notes"
+                            placeholder="Provide a description for this workout!"
+                            name="description"
                             onChange={handleChange}
                         />
                     </Grid>
@@ -193,7 +160,7 @@ function LogJournal() {
                     </Grid>
                     <Grid item xs={2}>
                         <Button variant="contained" onClick={() => {
-                            redirect("/fitnessJournals")
+                            redirect("/workoutTemplates")
                         }}>Back</Button>
                     </Grid>
                 </Grid>
@@ -203,4 +170,4 @@ function LogJournal() {
         ;
 }
 
-export default LogJournal;
+export default LogTemplate;
